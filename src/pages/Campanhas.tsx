@@ -1,4 +1,4 @@
-import { campanhas, useIdeas as _ } from "@/data/ideas";
+import { campanhas } from "@/data/ideas";
 import { Megaphone, ArrowRight } from "lucide-react";
 import { useIdeas } from "@/store/ideas";
 import { Link } from "react-router-dom";
