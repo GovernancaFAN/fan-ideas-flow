@@ -9,7 +9,7 @@ import logoPrograma from "@/assets/logo-somos-melhoria-continua.png";
 const items = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Nova Ideia", url: "/nova", icon: Lightbulb },
-  { title: "Kanban", url: "/kanban", icon: KanbanSquare },
+  { title: "Monitoramento de Status das Sugestões", url: "/kanban", icon: KanbanSquare },
   { title: "Comitê", url: "/comite", icon: ClipboardCheck },
   { title: "Implementação", url: "/implementacao", icon: Rocket },
   { title: "Campanhas", url: "/campanhas", icon: Megaphone },
