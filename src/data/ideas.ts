@@ -32,6 +32,9 @@ export interface ActionItem {
   done: boolean;
 }
 
+export type GainType = "Quantitativo" | "Qualitativo";
+export type QualitativeCategory = "Segurança" | "Qualidade" | "Ergonomia" | "Processo" | "Ambiental" | "Pessoas";
+
 export interface Idea {
   id: string;
   code: string;
@@ -48,13 +51,19 @@ export interface Idea {
   sla: number; // hours remaining
   evaluation?: Evaluation;
   score?: number;
+  gainType?: GainType;
   estimatedGain?: number;
   realizedGain?: number;
+  qualitativeBenefit?: string;
+  qualitativeCategory?: QualitativeCategory;
+  implementationCost?: number;
   progress?: number;
   actions?: ActionItem[];
   history: HistoryEntry[];
   campaign?: string;
   featured?: boolean;
+  replicavel?: boolean;
+  replicadaDe?: string; // id da ideia origem
 }
 
 export const empresas = [
@@ -78,10 +87,26 @@ export const setores = [
   "SST",
 ];
 
-export const campanhas = [
-  { id: "c1", nome: "Redução de Custos 2026", cor: "from-orange-500 to-amber-500", descricao: "Ideias que reduzam custos operacionais." },
-  { id: "c2", nome: "5S nas Áreas", cor: "from-amber-500 to-yellow-500", descricao: "Organização, limpeza e disciplina." },
-  { id: "c3", nome: "Inovação Aberta", cor: "from-rose-500 to-orange-500", descricao: "Soluções pioneiras e replicáveis." },
+export type CampaignType = "Redução de custo" | "5S" | "Inovação" | "Segurança" | "Qualidade" | "Sustentabilidade";
+
+export interface Campaign {
+  id: string;
+  nome: string;
+  empresa: string; // "Todas" ou nome
+  inicio: string;
+  fim: string;
+  objetivo: string;
+  tipo: CampaignType;
+  cor: string;
+  descricao: string;
+  ativa: boolean;
+}
+
+export const campanhas: Campaign[] = [
+  { id: "c1", nome: "Redução de Custos 2026", empresa: "Todas", inicio: "2026-01-01", fim: "2026-12-31", objetivo: "Reduzir 5% do OPEX", tipo: "Redução de custo", cor: "from-orange-500 to-amber-500", descricao: "Ideias que reduzam custos operacionais.", ativa: true },
+  { id: "c2", nome: "5S nas Áreas", empresa: "FAN Indústria", inicio: "2026-03-01", fim: "2026-08-31", objetivo: "Implantar 5S em 100% das áreas produtivas", tipo: "5S", cor: "from-amber-500 to-yellow-500", descricao: "Organização, limpeza e disciplina.", ativa: true },
+  { id: "c3", nome: "Inovação Aberta", empresa: "Todas", inicio: "2026-02-01", fim: "2026-12-31", objetivo: "Capturar soluções pioneiras e escaláveis", tipo: "Inovação", cor: "from-rose-500 to-orange-500", descricao: "Soluções pioneiras e replicáveis.", ativa: true },
+  { id: "c4", nome: "Zero Acidente 2025", empresa: "Todas", inicio: "2025-01-01", fim: "2025-12-31", objetivo: "Reduzir TFCA em 30%", tipo: "Segurança", cor: "from-red-500 to-orange-500", descricao: "Encerrada em 2025.", ativa: false },
 ];
 
 export function calcScore(e: Evaluation) {
@@ -133,7 +158,7 @@ export const initialIdeas: Idea[] = [
     ganhoEsperado: "Redução de 80% das paradas e ganho de produtividade.",
     status: "Concluído", stage: "Concluído", createdAt: "2026-03-12", sla: 0,
     evaluation: { abrangencia: 1, reducaoImpacto: 3.5, retornoFinanceiro: 2, criatividade: 1.5, investimento: 1 },
-    score: 2.1, estimatedGain: 84000, realizedGain: 92000, progress: 100, featured: true,
+    score: 2.1, gainType: "Quantitativo", estimatedGain: 84000, realizedGain: 92000, implementationCost: 12000, replicavel: true, progress: 100, featured: true,
     actions: [
       { id: "a1", title: "Especificar sensores", responsible: "João P.", due: "2026-04-01", done: true },
       { id: "a2", title: "Compra e instalação", responsible: "Manutenção", due: "2026-04-15", done: true },
@@ -154,7 +179,7 @@ export const initialIdeas: Idea[] = [
     ganhoEsperado: "Reduzir reentregas em 35%.",
     status: "Em execução", stage: "Implementação", createdAt: "2026-04-02", sla: 48,
     evaluation: { abrangencia: 1.5, reducaoImpacto: 1.5, retornoFinanceiro: 1.5, criatividade: 1.5, investimento: 1.5 },
-    score: 1.5, estimatedGain: 56000, progress: 60,
+    score: 1.5, gainType: "Quantitativo", estimatedGain: 56000, implementationCost: 8000, replicavel: true, progress: 60,
     actions: [
       { id: "a1", title: "Integração API CEP", responsible: "TI", due: "2026-05-10", done: true },
       { id: "a2", title: "Treinar atendentes", responsible: "Op. Log.", due: "2026-05-20", done: false },
@@ -197,7 +222,7 @@ export const initialIdeas: Idea[] = [
     ganhoEsperado: "Reduzir setup em 50%.",
     status: "Aprovado", stage: "Implementação", createdAt: "2026-04-25", sla: 60,
     evaluation: { abrangencia: 1, reducaoImpacto: 3.5, retornoFinanceiro: 1.5, criatividade: 1.5, investimento: 2 },
-    score: 1.95, estimatedGain: 120000, progress: 15,
+    score: 1.95, gainType: "Qualitativo", qualitativeBenefit: "Aumento de segurança operacional na troca de moldes (redução de risco ergonômico).", qualitativeCategory: "Segurança", implementationCost: 2500, progress: 15,
     actions: [
       { id: "a1", title: "Mapear setups", responsible: "Eng. Proc.", due: "2026-05-15", done: false },
     ],

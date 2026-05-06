@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIdeas } from "@/store/ideas";
-import { empresas, setores } from "@/data/ideas";
+import { empresas } from "@/data/ideas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -77,17 +77,11 @@ export default function NovaIdeia() {
             </div>
             <div>
               <Label>Setor do colaborador *</Label>
-              <Select value={form.setorColaborador} onValueChange={(v) => update("setorColaborador", v)}>
-                <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
-                <SelectContent>{setores.map(e => <SelectItem key={e} value={e}>{e}</SelectItem>)}</SelectContent>
-              </Select>
+              <Input value={form.setorColaborador} onChange={(e) => update("setorColaborador", e.target.value)} placeholder="Ex: Manutenção, PCP, etc." />
             </div>
             <div>
               <Label>Setor de aplicação da melhoria *</Label>
-              <Select value={form.setorAplicacao} onValueChange={(v) => update("setorAplicacao", v)}>
-                <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
-                <SelectContent>{setores.map(e => <SelectItem key={e} value={e}>{e}</SelectItem>)}</SelectContent>
-              </Select>
+              <Input value={form.setorAplicacao} onChange={(e) => update("setorAplicacao", e.target.value)} placeholder="Ex: Produção Linha 3" />
             </div>
           </div>
 
