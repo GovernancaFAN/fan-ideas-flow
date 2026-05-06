@@ -188,10 +188,10 @@ export default function Dashboard() {
               <Zap className="h-3 w-3" /> Dashboard Gerencial
             </span>
             <h1 className="mt-3 font-display text-3xl lg:text-4xl font-bold leading-tight">
-              Visão Executiva e Operacional
+              Gestão das Sugestões de Melhorias
             </h1>
             <p className="text-muted-foreground text-sm mt-1">
-              Acompanhe o ciclo de vida das ideias, gargalos e geração de resultado.
+              Acompanhe o ciclo de vida das sugestões de melhorias.
             </p>
           </div>
           <Link to="/nova" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-primary text-primary-foreground font-semibold text-sm shadow-glow hover:scale-[1.02] transition self-start lg:self-end">
