@@ -25,10 +25,8 @@ export function AppSidebar() {
     <Sidebar collapsible="icon" className="border-r border-sidebar-border">
       <SidebarHeader className="border-b border-sidebar-border">
         <div className="flex items-center gap-3 px-2 py-3">
-          <div className="relative">
-            <div className="h-9 w-9 rounded-xl bg-gradient-primary shadow-glow flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-primary-foreground" />
-            </div>
+          <div className="h-10 w-10 rounded-xl bg-white shadow-soft flex items-center justify-center overflow-hidden ring-1 ring-border">
+            <img src={logoPrograma} alt="Somos Melhoria Contínua" className="h-9 w-9 object-contain" />
           </div>
           {!collapsed && (
             <div className="flex flex-col leading-tight">
