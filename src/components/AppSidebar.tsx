@@ -3,7 +3,8 @@ import {
   Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel,
   SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarHeader, SidebarFooter, useSidebar,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Lightbulb, KanbanSquare, ClipboardCheck, Rocket, Megaphone, Trophy, Settings, Sparkles } from "lucide-react";
+import { LayoutDashboard, Lightbulb, KanbanSquare, ClipboardCheck, Rocket, Megaphone, Trophy, Settings } from "lucide-react";
+import logoPrograma from "@/assets/logo-somos-melhoria-continua.png";
 
 const items = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
