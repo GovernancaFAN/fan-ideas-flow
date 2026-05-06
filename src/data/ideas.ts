@@ -158,7 +158,7 @@ export const initialIdeas: Idea[] = [
     ganhoEsperado: "Redução de 80% das paradas e ganho de produtividade.",
     status: "Concluído", stage: "Concluído", createdAt: "2026-03-12", sla: 0,
     evaluation: { abrangencia: 1, reducaoImpacto: 3.5, retornoFinanceiro: 2, criatividade: 1.5, investimento: 1 },
-    score: 2.1, estimatedGain: 84000, realizedGain: 92000, progress: 100, featured: true,
+    score: 2.1, gainType: "Quantitativo", estimatedGain: 84000, realizedGain: 92000, implementationCost: 12000, replicavel: true, progress: 100, featured: true,
     actions: [
       { id: "a1", title: "Especificar sensores", responsible: "João P.", due: "2026-04-01", done: true },
       { id: "a2", title: "Compra e instalação", responsible: "Manutenção", due: "2026-04-15", done: true },
@@ -179,7 +179,7 @@ export const initialIdeas: Idea[] = [
     ganhoEsperado: "Reduzir reentregas em 35%.",
     status: "Em execução", stage: "Implementação", createdAt: "2026-04-02", sla: 48,
     evaluation: { abrangencia: 1.5, reducaoImpacto: 1.5, retornoFinanceiro: 1.5, criatividade: 1.5, investimento: 1.5 },
-    score: 1.5, estimatedGain: 56000, progress: 60,
+    score: 1.5, gainType: "Quantitativo", estimatedGain: 56000, implementationCost: 8000, replicavel: true, progress: 60,
     actions: [
       { id: "a1", title: "Integração API CEP", responsible: "TI", due: "2026-05-10", done: true },
       { id: "a2", title: "Treinar atendentes", responsible: "Op. Log.", due: "2026-05-20", done: false },
@@ -222,7 +222,7 @@ export const initialIdeas: Idea[] = [
     ganhoEsperado: "Reduzir setup em 50%.",
     status: "Aprovado", stage: "Implementação", createdAt: "2026-04-25", sla: 60,
     evaluation: { abrangencia: 1, reducaoImpacto: 3.5, retornoFinanceiro: 1.5, criatividade: 1.5, investimento: 2 },
-    score: 1.95, estimatedGain: 120000, progress: 15,
+    score: 1.95, gainType: "Qualitativo", qualitativeBenefit: "Aumento de segurança operacional na troca de moldes (redução de risco ergonômico).", qualitativeCategory: "Segurança", implementationCost: 2500, progress: 15,
     actions: [
       { id: "a1", title: "Mapear setups", responsible: "Eng. Proc.", due: "2026-05-15", done: false },
     ],
