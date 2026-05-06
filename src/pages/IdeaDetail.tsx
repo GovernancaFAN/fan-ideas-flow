@@ -197,17 +197,67 @@ export default function IdeaDetail() {
                 </Button>
               </div>
 
-              <div className="mt-5 pt-5 border-t border-border">
-                <Label>Validar ganho realizado (R$)</Label>
-                <div className="flex gap-2 mt-1">
-                  <Input type="number" value={realized} onChange={(e) => setRealized(e.target.value)} placeholder="Ex: 92000" />
-                  <Button variant="outline" onClick={() => {
-                    if (!realized) return;
-                    update(idea.id, { realizedGain: Number(realized) });
-                    addHistory(idea.id, { date: new Date().toISOString().slice(0, 10), user: "Implementação", action: "Ganho validado", feedback: `R$ ${Number(realized).toLocaleString("pt-BR")}` });
-                    toast.success("Ganho validado!");
-                    setRealized("");
-                  }}>Registrar</Button>
+              <div className="mt-5 pt-5 border-t border-border space-y-4">
+                <div>
+                  <Label>Tipo de ganho</Label>
+                  <Select value={idea.gainType || ""} onValueChange={(v) => update(idea.id, { gainType: v as any })}>
+                    <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Quantitativo">Ganho Quantitativo (financeiro)</SelectItem>
+                      <SelectItem value="Qualitativo">Ganho Qualitativo</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {idea.gainType === "Quantitativo" && (
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <div>
+                      <Label>Ganho estimado (R$)</Label>
+                      <Input type="number" value={idea.estimatedGain || ""} onChange={(e) => update(idea.id, { estimatedGain: Number(e.target.value) })} />
+                    </div>
+                    <div>
+                      <Label>Ganho realizado (R$)</Label>
+                      <div className="flex gap-2">
+                        <Input type="number" value={realized} onChange={(e) => setRealized(e.target.value)} placeholder={String(idea.realizedGain || "")} />
+                        <Button variant="outline" onClick={() => {
+                          if (!realized) return;
+                          update(idea.id, { realizedGain: Number(realized) });
+                          addHistory(idea.id, { date: new Date().toISOString().slice(0, 10), user: "Implementação", action: "Ganho validado", feedback: `R$ ${Number(realized).toLocaleString("pt-BR")}` });
+                          toast.success("Ganho validado!");
+                          setRealized("");
+                        }}>OK</Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {idea.gainType === "Qualitativo" && (
+                  <div className="space-y-3">
+                    <div>
+                      <Label>Categoria</Label>
+                      <Select value={idea.qualitativeCategory || ""} onValueChange={(v) => update(idea.id, { qualitativeCategory: v as any })}>
+                        <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
+                        <SelectContent>
+                          {["Segurança","Qualidade","Ergonomia","Processo","Ambiental","Pessoas"].map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>Benefício gerado</Label>
+                      <Textarea rows={2} value={idea.qualitativeBenefit || ""} onChange={(e) => update(idea.id, { qualitativeBenefit: e.target.value })} placeholder="Descreva o benefício qualitativo..." />
+                    </div>
+                  </div>
+                )}
+
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <div>
+                    <Label>Custo de implantação (R$)</Label>
+                    <Input type="number" value={idea.implementationCost || ""} onChange={(e) => update(idea.id, { implementationCost: Number(e.target.value) })} />
+                  </div>
+                  <div className="flex items-end gap-2 pb-1">
+                    <input id="rep" type="checkbox" className="h-4 w-4 accent-primary" checked={!!idea.replicavel} onChange={(e) => update(idea.id, { replicavel: e.target.checked })} />
+                    <label htmlFor="rep" className="text-sm">Marcar como <strong>replicável</strong> em outras empresas</label>
+                  </div>
                 </div>
               </div>
             </div>
