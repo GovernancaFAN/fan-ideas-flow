@@ -108,17 +108,21 @@ export default function Dashboard() {
 
   const pipeline = useMemo(() => {
     const subm = filtered.length;
-    const analise = filtered.filter((i) => i.stage !== "Recebimento" || i.status === "Em análise").length;
-    const comite = filtered.filter((i) => i.stage === "Comitê" || i.stage === "Implementação" || i.stage === "Concluído").length;
-    const aprov = filtered.filter((i) => ["Aprovado", "Em execução", "Concluído"].includes(i.status)).length;
-    const impl = filtered.filter((i) => i.stage === "Implementação" || i.stage === "Concluído").length;
-    const concl = filtered.filter((i) => i.stage === "Concluído").length;
+    const analise = filtered.filter((i) => ["Em análise", "Em entendimento"].includes(i.status)).length;
+    const comite = filtered.filter((i) => i.status === "Em comitê").length;
+    const novoEnt = filtered.filter((i) => i.status === "Necessário novo entendimento").length;
+    const aprov = filtered.filter((i) => ["Aprovado", "A iniciar", "Em execução", "Concluído"].includes(i.status)).length;
+    const aIniciar = filtered.filter((i) => i.status === "A iniciar").length;
+    const impl = filtered.filter((i) => i.status === "Em execução").length;
+    const concl = filtered.filter((i) => i.status === "Concluído").length;
     const conv = (a: number, b: number) => (b ? Math.round((a / b) * 100) : 0);
     return [
       { label: "Submetidas", count: subm, conv: conv(analise, subm), tempo: "0,5 d", color: "bg-info" },
       { label: "Em análise", count: analise, conv: conv(comite, analise), tempo: "1,2 d", color: "bg-info" },
       { label: "Em comitê", count: comite, conv: conv(aprov, comite), tempo: "3,4 d", color: "bg-warning" },
-      { label: "Aprovadas", count: aprov, conv: conv(impl, aprov), tempo: "1,0 d", color: "bg-primary" },
+      { label: "Novo entendimento", count: novoEnt, tempo: "—", color: "bg-warning" },
+      { label: "Aprovadas", count: aprov, conv: conv(aIniciar + impl + concl, aprov), tempo: "1,0 d", color: "bg-primary" },
+      { label: "A iniciar", count: aIniciar, conv: conv(impl + concl, aIniciar || 1), tempo: "2,0 d", color: "bg-primary" },
       { label: "Em implementação", count: impl, conv: conv(concl, impl), tempo: "12,8 d", color: "bg-primary" },
       { label: "Concluídas", count: concl, tempo: "—", color: "bg-success", isLast: true },
     ];
@@ -234,17 +238,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-          <KpiCard icon={Lightbulb} label="Submetidas" value={kpis.total} sub="total no período" accent="bg-primary" />
-          <KpiCard icon={CheckCircle2} label="Aprovadas" value={kpis.aprovadas} sub={`Taxa: ${kpis.taxaAprov}%`} subTone="success" accent="bg-success" />
-          <KpiCard icon={XCircle} label="Reprovadas" value={kpis.reprovadas} sub={`Taxa: ${kpis.taxaReprov}%`} subTone="danger" accent="bg-destructive" />
-          <KpiCard icon={HelpCircle} label="Novo entendimento" value={kpis.reentender} sub="aguardando autor" subTone="warning" accent="bg-warning" />
-          <KpiCard icon={Rocket} label="Implementadas" value={`${kpis.implPct}%`} sub={`${kpis.concluidas} de ${kpis.aprovadas} aprovadas`} accent="bg-info" />
-          <KpiCard icon={TrendingUp} label="Ganho financeiro" value={`R$ ${(kpis.ganho / 1000).toFixed(0)}k`} sub="realizado" subTone="success" accent="bg-warning" />
-        </div>
-
-        {/* Pipeline */}
+        {/* Pipeline (KPI block removido conforme governança) */}
         <div className="rounded-2xl border border-border bg-card p-5 shadow-card">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
