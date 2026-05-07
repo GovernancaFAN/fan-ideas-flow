@@ -9,6 +9,9 @@ const map: Record<IdeaStatus, string> = {
   "Em execução": "bg-primary/10 text-primary-deep border-primary/30",
   "Concluído": "bg-success text-success-foreground border-transparent",
   "Necessário novo entendimento": "bg-warning/15 text-warning-foreground border-warning/40",
+  "Em entendimento": "bg-info/10 text-info border-info/30",
+  "Em comitê": "bg-warning/15 text-warning-foreground border-warning/40",
+  "A iniciar": "bg-primary/15 text-primary-deep border-primary/40",
 };
 
 export function StatusBadge({ status, className }: { status: IdeaStatus; className?: string }) {
