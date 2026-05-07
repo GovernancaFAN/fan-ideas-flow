@@ -1,13 +1,21 @@
 export type IdeaStatus =
   | "Pendente"
   | "Em análise"
+  | "Em entendimento"
+  | "Em comitê"
   | "Aprovado"
   | "Reprovado"
+  | "A iniciar"
   | "Em execução"
   | "Concluído"
   | "Necessário novo entendimento";
 
-export type Stage = "Recebimento" | "Comitê" | "Implementação" | "Concluído";
+export type Stage =
+  | "Recebimento"
+  | "Entendimento"
+  | "Comitê"
+  | "Implementação"
+  | "Concluído";
 
 export interface Evaluation {
   abrangencia: number;
@@ -35,6 +43,12 @@ export interface ActionItem {
 export type GainType = "Quantitativo" | "Qualitativo";
 export type QualitativeCategory = "Segurança" | "Qualidade" | "Ergonomia" | "Processo" | "Ambiental" | "Pessoas";
 
+export interface Replicacao {
+  empresa: string;
+  ideaId: string;
+  status: IdeaStatus;
+}
+
 export interface Idea {
   id: string;
   code: string;
@@ -44,11 +58,11 @@ export interface Idea {
   setorAplicacao: string;
   problema: string;
   sugestao: string;
-  ganhoEsperado: string;
+  ganhoEsperado?: string;
   status: IdeaStatus;
   stage: Stage;
   createdAt: string;
-  sla: number; // hours remaining
+  sla: number;
   evaluation?: Evaluation;
   score?: number;
   gainType?: GainType;
@@ -63,7 +77,13 @@ export interface Idea {
   campaign?: string;
   featured?: boolean;
   replicavel?: boolean;
-  replicadaDe?: string; // id da ideia origem
+  replicadaDe?: string;
+  replicacoes?: Replicacao[];
+  importada?: boolean;
+  parecerEntendimento?: string;
+  observacoesEntendimento?: string;
+  entendimentoColaborador?: string;
+  observacoesImport?: string;
 }
 
 export const empresas = [
@@ -92,7 +112,7 @@ export type CampaignType = "Redução de custo" | "5S" | "Inovação" | "Seguran
 export interface Campaign {
   id: string;
   nome: string;
-  empresa: string; // "Todas" ou nome
+  empresa: string;
   inicio: string;
   fim: string;
   objetivo: string;
@@ -110,7 +130,6 @@ export const campanhas: Campaign[] = [
 ];
 
 export function calcScore(e: Evaluation) {
-  // pesos: abrangência 10, redução 20, financeiro 40, criatividade 20, investimento 10
   return (
     e.abrangencia * 0.1 +
     e.reducaoImpacto * 0.2 +
@@ -197,7 +216,7 @@ export const initialIdeas: Idea[] = [
     problema: "Amostras de matéria-prima demoram para chegar ao laboratório.",
     sugestao: "Tubo pneumático entre recepção e laboratório.",
     ganhoEsperado: "Reduzir tempo de análise em 60%.",
-    status: "Em análise", stage: "Comitê", createdAt: "2026-04-20", sla: 72,
+    status: "Em comitê", stage: "Comitê", createdAt: "2026-04-20", sla: 72,
     history: [
       { date: "2026-04-20", user: "Eduardo Lima", action: "Submissão" },
       { date: "2026-04-21", user: "Marina (PF)", action: "Encaminhado ao comitê", feedback: "Boa ideia, avaliar custo." },
@@ -220,12 +239,10 @@ export const initialIdeas: Idea[] = [
     problema: "Setup demorado nas trocas de molde.",
     sugestao: "Aplicar SMED com kit ferramentas dedicado por máquina.",
     ganhoEsperado: "Reduzir setup em 50%.",
-    status: "Aprovado", stage: "Implementação", createdAt: "2026-04-25", sla: 60,
+    status: "A iniciar", stage: "Implementação", createdAt: "2026-04-25", sla: 60,
     evaluation: { abrangencia: 1, reducaoImpacto: 3.5, retornoFinanceiro: 1.5, criatividade: 1.5, investimento: 2 },
-    score: 1.95, gainType: "Qualitativo", qualitativeBenefit: "Aumento de segurança operacional na troca de moldes (redução de risco ergonômico).", qualitativeCategory: "Segurança", implementationCost: 2500, progress: 15,
-    actions: [
-      { id: "a1", title: "Mapear setups", responsible: "Eng. Proc.", due: "2026-05-15", done: false },
-    ],
+    score: 1.95, gainType: "Qualitativo", qualitativeBenefit: "Aumento de segurança operacional na troca de moldes.", qualitativeCategory: "Segurança", implementationCost: 2500, progress: 0,
+    actions: [],
     history: [
       { date: "2026-04-25", user: "Marcos Oliveira", action: "Submissão" },
       { date: "2026-04-26", user: "Ana (PF)", action: "Aprovação inicial", feedback: "Excelente." },
@@ -241,7 +258,7 @@ export const initialIdeas: Idea[] = [
     status: "Reprovado", stage: "Recebimento", createdAt: "2026-04-28", sla: 0,
     history: [
       { date: "2026-04-28", user: "Roberta Alves", action: "Submissão" },
-      { date: "2026-04-29", user: "Sistema", action: "Reprovado", feedback: "Fora do escopo: solicitação sem ganho operacional/financeiro mensurável." },
+      { date: "2026-04-29", user: "Sistema", action: "Reprovado", feedback: "Fora do escopo." },
     ],
   },
   {
@@ -250,11 +267,22 @@ export const initialIdeas: Idea[] = [
     problema: "Muitos e-mails para conferir notas.",
     sugestao: "Automatizar conferência via OCR + RPA.",
     ganhoEsperado: "Liberar 2 FTEs para análise.",
-    status: "Necessário novo entendimento", stage: "Comitê", createdAt: "2026-04-15", sla: 24,
+    status: "Necessário novo entendimento", stage: "Entendimento", createdAt: "2026-04-15", sla: 24,
     history: [
       { date: "2026-04-15", user: "Felipe Santana", action: "Submissão" },
       { date: "2026-04-16", user: "Ricardo (PF)", action: "Encaminhado", feedback: "Ok." },
       { date: "2026-04-22", user: "Comitê", action: "Necessário novo entendimento", feedback: "Detalhar volume de notas e sistemas envolvidos." },
+    ],
+  },
+  {
+    id: "8", code: "MC-0195", empresa: "FAN Indústria", colaborador: "Sofia Pires",
+    setorColaborador: "Produção", setorAplicacao: "Produção",
+    problema: "Identificação manual de lotes na linha 2 gera retrabalho.",
+    sugestao: "Implantar etiquetas QR Code e leitura automática.",
+    status: "Em entendimento", stage: "Entendimento", createdAt: "2026-05-03", sla: 48,
+    history: [
+      { date: "2026-05-03", user: "Sofia Pires", action: "Submissão" },
+      { date: "2026-05-04", user: "Ana (PF)", action: "Em entendimento", feedback: "Vamos detalhar com o autor." },
     ],
   },
 ];
