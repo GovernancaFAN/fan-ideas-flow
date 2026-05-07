@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useIdeas } from "@/store/ideas";
 import { empresas } from "@/data/ideas";
@@ -9,15 +9,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { AlertCircle, CheckCircle2, Lightbulb, Sparkles } from "lucide-react";
+import { SimilarityAlert } from "@/components/SimilarityAlert";
 
 const examples = {
-  problema: 'Ex: "A linha 3 sofre 4 paradas/semana por desalinhamento da esteira, gerando perda de 2h de produção por evento."',
-  sugestao: 'Ex: "Instalar guias laterais ajustáveis com sensor de desvio integrado ao CLP para parada preventiva."',
-  ganho: 'Ex: "Redução estimada de 80% das paradas, ganho de 8h/semana de produção e R$ 84k/ano."',
+  problema: 'Ex: "A linha 3 sofre 4 paradas/semana por desalinhamento da esteira."',
+  sugestao: 'Ex: "Instalar guias laterais ajustáveis com sensor de desvio integrado ao CLP."',
+  ganho: 'Ex: "Redução estimada de 80% das paradas." (opcional)',
 };
 
 export default function NovaIdeia() {
   const add = useIdeas((s) => s.add);
+  const similares = useIdeas((s) => s.similares);
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -27,25 +29,24 @@ export default function NovaIdeia() {
 
   const update = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  // Elegibilidade simples
   const checks = {
     descritivo: form.problema.length > 30 && form.sugestao.length > 30,
     naoReclamacao: !/^(ruim|odeio|horr[íi]vel|p[ée]ssimo)/i.test(form.problema.trim()),
-    ganho: form.ganhoEsperado.length > 10,
   };
-  const elegivel = Object.values(checks).every(Boolean);
+
+  const sims = useMemo(() => {
+    if (!form.empresa || form.sugestao.length < 12) return [];
+    return similares(form.empresa, form.sugestao + " " + form.problema);
+  }, [form.empresa, form.sugestao, form.problema, similares]);
 
   const submit = () => {
-    if (Object.values(form).some((v) => !v)) {
+    const obrigatorios = ["empresa", "colaborador", "setorColaborador", "setorAplicacao", "problema", "sugestao"] as const;
+    if (obrigatorios.some((k) => !form[k])) {
       toast.error("Preencha todos os campos obrigatórios.");
       return;
     }
-    if (!elegivel) {
-      toast.warning("Sua ideia não atende aos critérios mínimos. Revise os campos destacados.");
-      return;
-    }
     const idea = add(form as any);
-    toast.success(`Ideia ${idea.code} enviada! Acompanhe o status no Kanban.`);
+    toast.success(`Sugestão ${idea.code} enviada!`);
     navigate(`/ideia/${idea.id}`);
   };
 
@@ -57,7 +58,7 @@ export default function NovaIdeia() {
         </div>
         <div>
           <h1 className="font-display text-3xl font-bold">Submeter nova ideia</h1>
-          <p className="text-sm text-muted-foreground">Conte sua ideia em poucos minutos. Quanto mais clara, mais rápido avança.</p>
+          <p className="text-sm text-muted-foreground">Conte sua ideia em poucos minutos.</p>
         </div>
       </div>
 
@@ -96,9 +97,12 @@ export default function NovaIdeia() {
             <Textarea rows={3} value={form.sugestao} onChange={(e) => update("sugestao", e.target.value)} placeholder={examples.sugestao} />
           </div>
 
+          {sims.length > 0 && <SimilarityAlert similares={sims} />}
+
           <div>
-            <Label>Ganho esperado *</Label>
+            <Label>Ganho esperado <span className="text-xs text-muted-foreground">(opcional)</span></Label>
             <Textarea rows={2} value={form.ganhoEsperado} onChange={(e) => update("ganhoEsperado", e.target.value)} placeholder={examples.ganho} />
+            <p className="text-[11px] text-muted-foreground mt-1">Caso ainda não tenha mensuração, deixe em branco — o Ponto Focal apoiará nessa etapa.</p>
           </div>
 
           <div className="flex items-center justify-between pt-2 border-t border-border">
@@ -113,13 +117,12 @@ export default function NovaIdeia() {
           <div className="rounded-2xl bg-gradient-soft p-5 border border-primary/20">
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="h-4 w-4 text-primary-deep" />
-              <h3 className="font-display font-bold text-sm">Checklist de elegibilidade</h3>
+              <h3 className="font-display font-bold text-sm">Boa prática</h3>
             </div>
             <ul className="space-y-2 text-xs">
               {[
                 ["Apresenta solução clara", checks.descritivo],
                 ["Não é apenas uma reclamação", checks.naoReclamacao],
-                ["Ganho mensurável descrito", checks.ganho],
               ].map(([label, ok]) => (
                 <li key={label as string} className="flex items-center gap-2">
                   <CheckCircle2 className={`h-4 w-4 ${ok ? "text-success" : "text-muted-foreground/50"}`} />
@@ -132,7 +135,7 @@ export default function NovaIdeia() {
           <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="font-display font-bold text-sm mb-2">Dica do FAN</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Ideias com <strong className="text-foreground">problema, solução e ganho</strong> bem descritos avançam até <strong className="text-primary-deep">3x mais rápido</strong> no comitê.
+              Ideias com <strong className="text-foreground">problema e solução</strong> bem descritos avançam até <strong className="text-primary-deep">3x mais rápido</strong>.
             </p>
           </div>
         </div>
