@@ -32,7 +32,7 @@ export type ModuloKey =
 
 export const MODULOS: { key: ModuloKey; label: string }[] = [
   { key: "dashboard", label: "Dashboard" },
-  { key: "nova", label: "Nova ideia" },
+  { key: "nova", label: "Nova sugestão de melhoria" },
   { key: "kanban", label: "Status das Sugestões" },
   { key: "campanhas", label: "Campanhas" },
   { key: "ranking", label: "Ranking" },

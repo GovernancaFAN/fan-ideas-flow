@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useIdeas } from "@/store/ideas";
-import { empresas } from "@/data/ideas";
+import { useIdeas, useEmpresasAtivasNomes } from "@/store/ideas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,6 +19,7 @@ const examples = {
 export default function NovaIdeia() {
   const add = useIdeas((s) => s.add);
   const similares = useIdeas((s) => s.similares);
+  const empresas = useEmpresasAtivasNomes();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -57,8 +57,8 @@ export default function NovaIdeia() {
           <Lightbulb className="h-6 w-6 text-primary-foreground" />
         </div>
         <div>
-          <h1 className="font-display text-3xl font-bold">Submeter nova ideia</h1>
-          <p className="text-sm text-muted-foreground">Conte sua ideia em poucos minutos.</p>
+          <h1 className="font-display text-3xl font-bold">Submeter nova sugestão de melhoria</h1>
+          <p className="text-sm text-muted-foreground">Conte sua sugestão de melhoria em poucos minutos.</p>
         </div>
       </div>
 
@@ -108,7 +108,7 @@ export default function NovaIdeia() {
           <div className="flex items-center justify-between pt-2 border-t border-border">
             <p className="text-xs text-muted-foreground">Você poderá acompanhar o status em tempo real.</p>
             <Button onClick={submit} className="bg-gradient-primary text-primary-foreground shadow-glow">
-              Enviar ideia
+              Enviar sugestão de melhoria
             </Button>
           </div>
         </div>
@@ -135,7 +135,7 @@ export default function NovaIdeia() {
           <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="font-display font-bold text-sm mb-2">Dica do FAN</h3>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Ideias com <strong className="text-foreground">problema e solução</strong> bem descritos avançam até <strong className="text-primary-deep">3x mais rápido</strong>.
+              Sugestões com <strong className="text-foreground">problema e solução</strong> bem descritos avançam até <strong className="text-primary-deep">3x mais rápido</strong>.
             </p>
           </div>
         </div>
