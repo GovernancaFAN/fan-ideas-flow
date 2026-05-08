@@ -349,7 +349,7 @@ export default function Dashboard() {
               <AlertTriangle className="h-5 w-5 text-destructive shrink-0" />
               <div className="flex-1">
                 <p className="text-sm font-semibold">SLA crítico</p>
-                <p className="text-xs text-muted-foreground">{gargalos.slaEstourado} ideia(s) com SLA prestes a estourar (≤ 24h).</p>
+                <p className="text-xs text-muted-foreground">{gargalos.slaEstourado} sugestão(ões) com SLA prestes a estourar (≤ 24h).</p>
               </div>
               <Link to="/kanban" className="text-xs font-semibold text-destructive hover:underline">Tratar →</Link>
             </div>
@@ -383,7 +383,7 @@ export default function Dashboard() {
             <div className="p-5 border-b border-border flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Trophy className="h-4 w-4 text-primary" />
-                <h3 className="font-display font-bold">Ideia destaque do mês</h3>
+                <h3 className="font-display font-bold">Sugestão de melhoria destaque do mês</h3>
               </div>
               <StatusBadge status={featured.status} />
             </div>
