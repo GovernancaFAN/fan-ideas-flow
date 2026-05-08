@@ -255,3 +255,19 @@ export const useAdmin = create<AdminState>((set, get) => ({
   toggleCampanha: (id) =>
     set({ campanhas: get().campanhas.map((c) => (c.id === id ? { ...c, ativa: !c.ativa } : c)) }),
 }));
+
+/**
+ * Lista de nomes de empresas ATIVAS (para filtrar visualizações).
+ * Quando uma empresa é desativada, suas informações somem dos módulos.
+ */
+export function useEmpresasAtivasNomes(): string[] {
+  return useAdmin((s) => s.empresas.filter((e) => e.ativa).map((e) => e.nome));
+}
+
+/** Ideias visíveis: apenas das empresas ativas. */
+export function useVisibleIdeas() {
+  const ideas = useIdeas((s) => s.ideas);
+  const ativas = useEmpresasAtivasNomes();
+  const set = new Set(ativas);
+  return ideas.filter((i) => set.has(i.empresa));
+}
