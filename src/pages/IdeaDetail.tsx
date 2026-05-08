@@ -94,7 +94,7 @@ export default function IdeaDetail() {
             <dl className="space-y-4 text-sm">
               <div><dt className="text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-1">Problema identificado</dt><dd>{idea.problema}</dd></div>
               <div><dt className="text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-1">Sugestão</dt><dd>{idea.sugestao}</dd></div>
-              <div><dt className="text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-1">Ganho esperado</dt><dd>{idea.ganhoEsperado}</dd></div>
+              {idea.ganhoEsperado && <div><dt className="text-xs uppercase tracking-wider font-semibold text-muted-foreground mb-1">Ganho esperado</dt><dd>{idea.ganhoEsperado}</dd></div>}
             </dl>
           </div>
 

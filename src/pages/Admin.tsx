@@ -134,7 +134,7 @@ export default function Admin() {
                 <div key={e.id} className="flex items-center justify-between py-3">
                   <div>
                     <p className="font-semibold">{e.nome}</p>
-                    <p className="text-xs text-muted-foreground">{usuarios.filter((u) => u.empresa === e.nome).length} usuários · {ideas.filter((i) => i.empresa === e.nome).length} ideias</p>
+                    <p className="text-xs text-muted-foreground">{usuarios.filter((u) => u.empresa === e.nome).length} usuários · {ideas.filter((i) => i.empresa === e.nome).length} sugestões</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <Badge variant={e.ativa ? "default" : "secondary"}>{e.ativa ? "Ativa" : "Inativa"}</Badge>
@@ -355,7 +355,7 @@ export default function Admin() {
                   </div>
                 );
               })}
-              {replicaveis.length === 0 && <p className="text-sm text-muted-foreground py-4 text-center">Nenhuma ideia marcada como replicável ainda.</p>}
+              {replicaveis.length === 0 && <p className="text-sm text-muted-foreground py-4 text-center">Nenhuma sugestão marcada como replicável ainda.</p>}
             </div>
           </div>
 
@@ -452,7 +452,7 @@ export default function Admin() {
           <div className="rounded-2xl border border-border bg-card p-6 flex items-center justify-between">
             <div>
               <h3 className="font-display font-bold flex items-center gap-2"><Database className="h-4 w-4 text-primary-deep" />Exportar relatório</h3>
-              <p className="text-xs text-muted-foreground">CSV completo com todas as ideias, ganhos e custos.</p>
+              <p className="text-xs text-muted-foreground">CSV completo com todas as sugestões de melhoria, ganhos e custos.</p>
             </div>
             <Button onClick={exportCSV} className="bg-gradient-primary text-primary-foreground shadow-glow">
               <Download className="h-4 w-4 mr-1" />Exportar CSV
