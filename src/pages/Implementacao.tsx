@@ -1,11 +1,11 @@
-import { useIdeas } from "@/store/ideas";
+import { useVisibleIdeas } from "@/store/ideas";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Heart, Wallet } from "lucide-react";
 
 export default function Implementacao() {
-  const ideas = useIdeas((s) => s.ideas).filter((i) => i.stage === "Implementação" || i.stage === "Concluído");
+  const ideas = useVisibleIdeas().filter((i) => i.stage === "Implementação" || i.stage === "Concluído");
 
   const totalGanho = ideas.reduce((s, i) => s + (i.realizedGain || i.estimatedGain || 0), 0);
   const totalCusto = ideas.reduce((s, i) => s + (i.implementationCost || 0), 0);
@@ -14,7 +14,7 @@ export default function Implementacao() {
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto">
       <h1 className="font-display text-3xl font-bold">Gestão da implementação</h1>
-      <p className="text-sm text-muted-foreground mb-6">Acompanhe o progresso das ideias aprovadas até o resultado validado.</p>
+      <p className="text-sm text-muted-foreground mb-6">Acompanhe o progresso das sugestões de melhoria aprovadas até o resultado validado.</p>
 
       <div className="grid sm:grid-cols-3 gap-3 mb-6">
         <div className="rounded-2xl border border-border bg-card p-4 flex items-center gap-3">
@@ -27,7 +27,7 @@ export default function Implementacao() {
         </div>
         <div className="rounded-2xl border border-border bg-card p-4 flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-muted flex items-center justify-center"><Heart className="h-5 w-5 text-primary-deep" /></div>
-          <div><p className="text-xs text-muted-foreground">Ideias qualitativas</p><p className="font-display font-bold">{qualitativas}</p></div>
+          <div><p className="text-xs text-muted-foreground">Sugestões qualitativas</p><p className="font-display font-bold">{qualitativas}</p></div>
         </div>
       </div>
 
@@ -35,7 +35,7 @@ export default function Implementacao() {
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left text-xs uppercase tracking-wider text-muted-foreground">
             <tr>
-              <th className="p-3">Código</th><th className="p-3">Ideia</th><th className="p-3">Empresa</th>
+              <th className="p-3">Código</th><th className="p-3">Sugestão de melhoria</th><th className="p-3">Empresa</th>
               <th className="p-3">Tipo</th><th className="p-3">Progresso</th>
               <th className="p-3 text-right">Ganho</th><th className="p-3 text-right">Custo</th>
             </tr>

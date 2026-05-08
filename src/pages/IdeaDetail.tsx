@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom";
-import { useIdeas } from "@/store/ideas";
+import { useIdeas, useEmpresasAtivasNomes } from "@/store/ideas";
 import { useState } from "react";
 import { criterios, calcScore, Evaluation } from "@/data/ideas";
 import { StatusBadge } from "@/components/StatusBadge";
@@ -17,6 +17,7 @@ const stages = ["Recebimento", "Comitê", "Implementação", "Concluído"];
 export default function IdeaDetail() {
   const { id } = useParams();
   const { ideas, evaluate, setStatus, update, addHistory } = useIdeas();
+  const empresasAtivas = useEmpresasAtivasNomes();
   const idea = ideas.find((i) => i.id === id);
   const [feedback, setFeedback] = useState("");
   const [ev, setEv] = useState<Evaluation>({ abrangencia: 0.5, reducaoImpacto: 1.5, retornoFinanceiro: 0.5, criatividade: 1.5, investimento: 0.5 });
@@ -25,7 +26,8 @@ export default function IdeaDetail() {
   const [taskDue, setTaskDue] = useState("");
   const [realized, setRealized] = useState("");
 
-  if (!idea) return <div className="p-8">Ideia não encontrada. <Link to="/" className="text-primary-deep underline">Voltar</Link></div>;
+  if (!idea) return <div className="p-8">Sugestão de melhoria não encontrada. <Link to="/" className="text-primary-deep underline">Voltar</Link></div>;
+  if (!empresasAtivas.includes(idea.empresa)) return <div className="p-8">Esta sugestão pertence a uma empresa desativada e não está disponível. <Link to="/" className="text-primary-deep underline">Voltar</Link></div>;
 
   const stageIdx = stages.indexOf(idea.stage);
   const score = ev ? calcScore(ev) : 0;
