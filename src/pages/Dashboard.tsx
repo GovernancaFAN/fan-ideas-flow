@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useIdeas } from "@/store/ideas";
+import { useIdeas, useVisibleIdeas, useEmpresasAtivasNomes } from "@/store/ideas";
 import {
   ArrowUpRight, Lightbulb, CheckCircle2, XCircle, HelpCircle, Clock, TrendingUp,
   Users, Trophy, Zap, AlertTriangle, Filter, Building2, Target, Rocket, Award,
@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import { StatusBadge } from "@/components/StatusBadge";
 import { Progress } from "@/components/ui/progress";
-import { empresas, setores, IdeaStatus } from "@/data/ideas";
+import { setores, IdeaStatus } from "@/data/ideas";
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
@@ -77,7 +77,8 @@ const MONTHS_PT = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set"
 const PIE_COLORS = ["hsl(var(--primary))", "hsl(var(--warning))", "hsl(var(--info))", "hsl(var(--success))"];
 
 export default function Dashboard() {
-  const ideas = useIdeas((s) => s.ideas);
+  const ideas = useVisibleIdeas();
+  const empresas = useEmpresasAtivasNomes();
 
   const [empresaF, setEmpresaF] = useState<string>("Todas");
   const [periodoF, setPeriodoF] = useState<(typeof PERIODOS)[number]>("Mês");
@@ -199,7 +200,7 @@ export default function Dashboard() {
             </p>
           </div>
           <Link to="/nova" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-primary text-primary-foreground font-semibold text-sm shadow-glow hover:scale-[1.02] transition self-start lg:self-end">
-            <Lightbulb className="h-4 w-4" /> Submeter ideia
+            <Lightbulb className="h-4 w-4" /> Submeter sugestão
           </Link>
         </div>
 
@@ -243,7 +244,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Target className="h-4 w-4 text-primary" />
-              <h3 className="font-display font-bold">Pipeline — Ciclo de vida das ideias</h3>
+              <h3 className="font-display font-bold">Pipeline — Ciclo de vida das sugestões de melhoria</h3>
             </div>
             <span className="text-[11px] text-muted-foreground">% = conversão para próxima etapa</span>
           </div>
@@ -257,7 +258,7 @@ export default function Dashboard() {
         {/* Análises de desempenho */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 rounded-2xl border border-border bg-card p-5 shadow-card">
-            <h3 className="font-display font-bold mb-4">Ideias por mês</h3>
+            <h3 className="font-display font-bold mb-4">Sugestões de melhoria por mês</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={ideasPorMes}>
