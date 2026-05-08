@@ -11,7 +11,7 @@ import { ModuloKey } from "@/data/admin";
 
 const items: { title: string; url: string; icon: any; mod: ModuloKey }[] = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard, mod: "dashboard" },
-  { title: "Nova Ideia", url: "/nova", icon: Lightbulb, mod: "nova" },
+  { title: "Nova Sugestão de Melhoria", url: "/nova", icon: Lightbulb, mod: "nova" },
   { title: "Status das Sugestões", url: "/kanban", icon: KanbanSquare, mod: "kanban" },
   { title: "Entendimento", url: "/entendimento", icon: Search, mod: "entendimento" },
   { title: "Comitê", url: "/comite", icon: ClipboardCheck, mod: "comite" },
@@ -90,7 +90,7 @@ export function AppSidebar() {
         {!collapsed && (
           <div className="px-2 py-3 text-[11px] text-muted-foreground">
             <p className="font-semibold text-foreground">Portal MC v1.0</p>
-            <p>Conectando ideias a resultados.</p>
+            <p>Conectando sugestões a resultados.</p>
           </div>
         )}
       </SidebarFooter>

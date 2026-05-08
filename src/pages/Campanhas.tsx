@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
-import { useAdmin, useIdeas } from "@/store/ideas";
-import { CampaignType, empresas } from "@/data/ideas";
+import { useAdmin, useVisibleIdeas, useEmpresasAtivasNomes } from "@/store/ideas";
+import { CampaignType } from "@/data/ideas";
 import { Megaphone, Plus, Calendar, Target, Building2, Power } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,7 +23,8 @@ const cores = [
 
 export default function Campanhas() {
   const { campanhas, addCampanha, toggleCampanha } = useAdmin();
-  const ideas = useIdeas((s) => s.ideas);
+  const ideas = useVisibleIdeas();
+  const empresas = useEmpresasAtivasNomes();
   const [open, setOpen] = useState(false);
   const [filtroEmpresa, setFiltroEmpresa] = useState("Todas");
 
@@ -135,7 +136,7 @@ export default function Campanhas() {
                     <p className="flex items-center gap-1"><Calendar className="h-3 w-3" />{c.inicio} → {c.fim}</p>
                   </div>
                   <div className="mt-4 pt-3 border-t border-white/20 flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-wider font-bold opacity-90">{count} ideias</span>
+                    <span className="text-xs uppercase tracking-wider font-bold opacity-90">{count} sugestões</span>
                     <span className="text-[10px] uppercase tracking-wider bg-white/20 rounded-full px-2 py-0.5">{c.tipo}</span>
                   </div>
                 </div>
@@ -148,7 +149,7 @@ export default function Campanhas() {
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <table className="w-full text-sm">
               <thead className="bg-muted/50 text-xs uppercase tracking-wider text-muted-foreground">
-                <tr><th className="p-3 text-left">Campanha</th><th className="p-3 text-left">Empresa</th><th className="p-3 text-left">Período</th><th className="p-3 text-left">Tipo</th><th className="p-3 text-right">Ideias</th></tr>
+                <tr><th className="p-3 text-left">Campanha</th><th className="p-3 text-left">Empresa</th><th className="p-3 text-left">Período</th><th className="p-3 text-left">Tipo</th><th className="p-3 text-right">Sugestões</th></tr>
               </thead>
               <tbody className="divide-y divide-border">
                 {encerradas.map((c) => (

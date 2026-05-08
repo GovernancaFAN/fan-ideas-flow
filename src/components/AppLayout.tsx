@@ -27,7 +27,7 @@ export default function AppLayout() {
               <RoleSwitcher />
               <NotificationsBell />
               <Button onClick={() => navigate("/nova")} className="bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95">
-                <Plus className="h-4 w-4 mr-1" /> Nova ideia
+                <Plus className="h-4 w-4 mr-1" /> Nova sugestão de melhoria
               </Button>
               <div className="hidden sm:flex items-center gap-2 pl-3 border-l border-border ml-2">
                 <div className="h-9 w-9 rounded-full bg-gradient-soft flex items-center justify-center font-display font-bold text-primary-deep">

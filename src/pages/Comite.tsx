@@ -1,8 +1,8 @@
-import { useIdeas } from "@/store/ideas";
+import { useVisibleIdeas } from "@/store/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
 
 export default function Comite() {
-  const ideas = useIdeas((s) => s.ideas).filter((i) => i.stage === "Comitê" || i.status === "Em comitê" || i.status === "Necessário novo entendimento");
+  const ideas = useVisibleIdeas().filter((i) => i.stage === "Comitê" || i.status === "Em comitê" || i.status === "Necessário novo entendimento");
   return (
     <div className="p-6 lg:p-8 max-w-7xl mx-auto">
       <h1 className="font-display text-3xl font-bold">Comitê de avaliação</h1>

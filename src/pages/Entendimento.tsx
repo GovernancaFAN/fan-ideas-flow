@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useIdeas } from "@/store/ideas";
+import { useIdeas, useVisibleIdeas } from "@/store/ideas";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,7 +9,7 @@ import { toast } from "sonner";
 import { StatusBadge } from "@/components/StatusBadge";
 
 export default function Entendimento() {
-  const ideas = useIdeas((s) => s.ideas);
+  const ideas = useVisibleIdeas();
   const registrar = useIdeas((s) => s.registrarEntendimento);
   const setStatus = useIdeas((s) => s.setStatus);
   const fila = ideas.filter((i) => i.stage === "Recebimento" || i.stage === "Entendimento" || i.status === "Necessário novo entendimento");

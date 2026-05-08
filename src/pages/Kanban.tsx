@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { useIdeas } from "@/store/ideas";
+import { useVisibleIdeas } from "@/store/ideas";
 import { IdeaStatus } from "@/data/ideas";
 import { IdeaCard } from "@/components/IdeaCard";
 import { Input } from "@/components/ui/input";
@@ -16,7 +16,7 @@ const columns: { key: IdeaStatus[]; title: string; tone: string }[] = [
 ];
 
 export default function Kanban() {
-  const ideas = useIdeas((s) => s.ideas);
+  const ideas = useVisibleIdeas();
   const [q, setQ] = useState("");
 
   const filtered = useMemo(() => {

@@ -1,4 +1,4 @@
-import { useIdeas } from "@/store/ideas";
+import { useVisibleIdeas } from "@/store/ideas";
 import { Trophy, Medal, Building2, User, Layers, Globe } from "lucide-react";
 import { useMemo } from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -37,7 +37,7 @@ function List({ data, unit }: { data: Row[]; unit: string }) {
 }
 
 export default function Ranking() {
-  const ideas = useIdeas((s) => s.ideas);
+  const ideas = useVisibleIdeas();
 
   const groups = useMemo(() => {
     const make = (keyFn: (i: any) => string) => {
@@ -84,10 +84,10 @@ export default function Ranking() {
           <TabsTrigger value="colaborador"><User className="h-3.5 w-3.5 mr-1" />Colaborador</TabsTrigger>
           <TabsTrigger value="area"><Layers className="h-3.5 w-3.5 mr-1" />Área</TabsTrigger>
         </TabsList>
-        <TabsContent value="geral" className="mt-4"><List data={groups.geral} unit="ideias totais" /></TabsContent>
-        <TabsContent value="empresa" className="mt-4"><List data={groups.empresa} unit="ideias" /></TabsContent>
-        <TabsContent value="colaborador" className="mt-4"><List data={groups.colaborador} unit="ideias" /></TabsContent>
-        <TabsContent value="area" className="mt-4"><List data={groups.area} unit="ideias" /></TabsContent>
+        <TabsContent value="geral" className="mt-4"><List data={groups.geral} unit="sugestões totais" /></TabsContent>
+        <TabsContent value="empresa" className="mt-4"><List data={groups.empresa} unit="sugestões" /></TabsContent>
+        <TabsContent value="colaborador" className="mt-4"><List data={groups.colaborador} unit="sugestões" /></TabsContent>
+        <TabsContent value="area" className="mt-4"><List data={groups.area} unit="sugestões" /></TabsContent>
       </Tabs>
     </div>
   );
