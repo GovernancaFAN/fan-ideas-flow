@@ -201,6 +201,8 @@ export const useIdeas = create<IdeasState>((set, get) => ({
   },
 }));
 
+const EMPTY_PERMS: ModuloKey[] = [];
+
 interface AdminState {
   empresas: EmpresaCfg[];
   usuarios: UsuarioPerfil[];
