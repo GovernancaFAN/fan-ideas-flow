@@ -256,18 +256,24 @@ export const useAdmin = create<AdminState>((set, get) => ({
     set({ campanhas: get().campanhas.map((c) => (c.id === id ? { ...c, ativa: !c.ativa } : c)) }),
 }));
 
+import { useMemo } from "react";
+
 /**
  * Lista de nomes de empresas ATIVAS (para filtrar visualizações).
- * Quando uma empresa é desativada, suas informações somem dos módulos.
+ * Usa o array de empresas como dependência estável para evitar loops de render
+ * (não retorna um array novo dentro do seletor do Zustand).
  */
 export function useEmpresasAtivasNomes(): string[] {
-  return useAdmin((s) => s.empresas.filter((e) => e.ativa).map((e) => e.nome));
+  const empresas = useAdmin((s) => s.empresas);
+  return useMemo(() => empresas.filter((e) => e.ativa).map((e) => e.nome), [empresas]);
 }
 
 /** Ideias visíveis: apenas das empresas ativas. */
 export function useVisibleIdeas() {
   const ideas = useIdeas((s) => s.ideas);
   const ativas = useEmpresasAtivasNomes();
-  const set = new Set(ativas);
-  return ideas.filter((i) => set.has(i.empresa));
+  return useMemo(() => {
+    const set = new Set(ativas);
+    return ideas.filter((i) => set.has(i.empresa));
+  }, [ideas, ativas]);
 }
