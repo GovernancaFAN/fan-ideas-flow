@@ -249,7 +249,7 @@ export const useAdmin = create<AdminState>((set, get) => ({
     set({ perfis: get().perfis.map((p) => (p.id === id ? { ...p, ativo: !p.ativo } : p)) }),
   permissoesDoPerfil: (nome) => {
     const p = get().perfis.find((x) => x.nome === nome && x.ativo);
-    return p?.permissoes || [];
+    return p?.permissoes || EMPTY_PERMS;
   },
   addCampanha: (c) => set({ campanhas: [...get().campanhas, { ...c, id: String(Date.now()) }] }),
   toggleCampanha: (id) =>
