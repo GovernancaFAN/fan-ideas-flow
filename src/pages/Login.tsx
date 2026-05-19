@@ -79,11 +79,67 @@ export default function Login() {
             <LogIn className="h-4 w-4 mr-1" /> {loading ? "Entrando..." : "Entrar"}
           </Button>
 
+          <BootstrapAdmin />
+
           <p className="text-[11px] text-muted-foreground text-center pt-2">
             Acesso fornecido pelo Administrador do sistema.
           </p>
         </form>
       </div>
     </div>
+  );
+}
+
+function BootstrapAdmin() {
+  const [open, setOpen] = useState(false);
+  const [nome, setNome] = useState("");
+  const [empresa, setEmpresa] = useState("FAN Indústria");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const submit = async () => {
+    if (!nome || !email || senha.length < 6) {
+      toast.error("Preencha todos os campos (senha 6+).");
+      return;
+    }
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email: email.trim(),
+      password: senha,
+      options: {
+        emailRedirectTo: `${window.location.origin}/`,
+        data: { nome, empresa, perfil: "Administrador" },
+      },
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Administrador criado. Faça login.");
+    setOpen(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button type="button" variant="ghost" size="sm" className="w-full text-xs">
+          <ShieldPlus className="h-3.5 w-3.5 mr-1" /> Primeiro acesso? Criar administrador
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader><DialogTitle>Criar Administrador inicial</DialogTitle></DialogHeader>
+        <div className="space-y-3">
+          <div className="space-y-1"><Label>Nome</Label><Input value={nome} onChange={(e) => setNome(e.target.value)} /></div>
+          <div className="space-y-1"><Label>Empresa</Label><Input value={empresa} onChange={(e) => setEmpresa(e.target.value)} /></div>
+          <div className="space-y-1"><Label>E-mail</Label><Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+          <div className="space-y-1"><Label>Senha (mín. 6)</Label><Input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
+        </div>
+        <DialogFooter>
+          <Button onClick={submit} disabled={loading} className="bg-gradient-primary text-primary-foreground">Criar</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
