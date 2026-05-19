@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Download, Settings, Shield, Database, Building2, Users, Clock, Copy, Plus, Upload, Power, FileSpreadsheet } from "lucide-react";
 import { toast } from "sonner";
+import { supabaseShadow, matriculaToEmail } from "@/lib/supabaseShadow";
 
 const FIELDS = [
   { key: "sugestao", label: "Título / sugestão" },
@@ -35,7 +36,7 @@ export default function Admin() {
   const auth = useAuth();
 
   const [novaEmpresa, setNovaEmpresa] = useState("");
-  const [novoUsuario, setNovoUsuario] = useState({ nome: "", email: "", matricula: "", empresa: empresas[0]?.nome || "", perfil: "Ponto Focal" as string, ativo: true });
+  const [novoUsuario, setNovoUsuario] = useState({ nome: "", email: "", matricula: "", empresa: empresas[0]?.nome || "", perfil: "Ponto Focal" as string, ativo: true, senha: "" });
   const [replicaSel, setReplicaSel] = useState<Record<string, string[]>>({});
   const [novaEtapa, setNovaEtapa] = useState({ nome: "", dias: 3, exigeAprovacao: false, responsavelPerfil: "Ponto Focal" as string });
   const [novoPerfil, setNovoPerfil] = useState({ nome: "", permissoes: [] as ModuloKey[] });
@@ -151,10 +152,11 @@ export default function Admin() {
           <div className="rounded-2xl border border-border bg-card p-5">
             <h3 className="font-display font-bold mb-1">Novo usuário</h3>
             <p className="text-xs text-muted-foreground mb-3">Para colaborador operacional, basta a matrícula. Demais perfis exigem nome e e-mail.</p>
-            <div className="grid sm:grid-cols-6 gap-2">
+            <div className="grid sm:grid-cols-7 gap-2">
               <Input placeholder="Matrícula" value={novoUsuario.matricula} onChange={(e) => setNovoUsuario({ ...novoUsuario, matricula: e.target.value })} />
               <Input placeholder="Nome" value={novoUsuario.nome} onChange={(e) => setNovoUsuario({ ...novoUsuario, nome: e.target.value })} />
               <Input placeholder="E-mail" value={novoUsuario.email} onChange={(e) => setNovoUsuario({ ...novoUsuario, email: e.target.value })} />
+              <Input placeholder="Senha (mín. 6)" type="password" value={novoUsuario.senha} onChange={(e) => setNovoUsuario({ ...novoUsuario, senha: e.target.value })} />
               <Select value={novoUsuario.empresa} onValueChange={(v) => setNovoUsuario({ ...novoUsuario, empresa: v })}>
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>{empresas.map((e) => <SelectItem key={e.id} value={e.nome}>{e.nome}</SelectItem>)}</SelectContent>
@@ -163,13 +165,22 @@ export default function Admin() {
                 <SelectTrigger><SelectValue /></SelectTrigger>
                 <SelectContent>{perfis.filter(p=>p.ativo).map((p) => <SelectItem key={p.id} value={String(p.nome)}>{p.nome}</SelectItem>)}</SelectContent>
               </Select>
-              <Button onClick={() => {
+              <Button onClick={async () => {
                 const isOp = novoUsuario.perfil === "Colaborador";
                 if (isOp && !novoUsuario.matricula) { toast.error("Informe a matrícula."); return; }
                 if (!isOp && (!novoUsuario.nome || !novoUsuario.email)) { toast.error("Nome e e-mail obrigatórios."); return; }
-                addUsuario({ ...novoUsuario, nome: novoUsuario.nome || `Colab. ${novoUsuario.matricula}` });
-                setNovoUsuario({ ...novoUsuario, nome: "", email: "", matricula: "" });
-                toast.success("Usuário cadastrado.");
+                if (novoUsuario.senha.length < 6) { toast.error("Defina uma senha de 6+ caracteres."); return; }
+                const finalEmail = isOp ? matriculaToEmail(novoUsuario.matricula) : novoUsuario.email.trim();
+                const nomeFinal = novoUsuario.nome || `Colab. ${novoUsuario.matricula}`;
+                const { error } = await supabaseShadow.auth.signUp({
+                  email: finalEmail,
+                  password: novoUsuario.senha,
+                  options: { data: { nome: nomeFinal, empresa: novoUsuario.empresa, perfil: novoUsuario.perfil, matricula: novoUsuario.matricula || null } },
+                });
+                if (error) { toast.error("Falha ao criar acesso: " + error.message); return; }
+                addUsuario({ ...novoUsuario, nome: nomeFinal });
+                setNovoUsuario({ ...novoUsuario, nome: "", email: "", matricula: "", senha: "" });
+                toast.success("Usuário cadastrado com acesso ao sistema.");
               }}><Plus className="h-4 w-4 mr-1" />Adicionar</Button>
             </div>
           </div>
