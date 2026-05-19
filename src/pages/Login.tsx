@@ -13,13 +13,14 @@ import { toast } from "sonner";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { userId, ready } = useAuth();
+  const { userId, ready, init } = useAuth();
   const [mode, setMode] = useState<"email" | "matricula">("email");
   const [email, setEmail] = useState("");
   const [matricula, setMatricula] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => { init(); }, [init]);
   useEffect(() => {
     if (ready && userId) navigate("/", { replace: true });
   }, [ready, userId, navigate]);
