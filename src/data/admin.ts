@@ -87,23 +87,25 @@ export interface EtapaSla {
 }
 
 export const empresasIniciais: EmpresaCfg[] = [
-  { id: "e1", nome: "FAN Indústria", ativa: true },
-  { id: "e2", nome: "FAN Logística", ativa: true },
-  { id: "e3", nome: "FAN Agro", ativa: true },
-  { id: "e4", nome: "FAN Energia", ativa: true },
-  { id: "e5", nome: "FAN Serviços", ativa: true },
+  { id: "e1", nome: "Usibras - Aquiraz", ativa: true },
+  { id: "e2", nome: "Usibras - Mossoró", ativa: true },
+  { id: "e3", nome: "Construtora", ativa: true },
+  { id: "e4", nome: "My Blue", ativa: true },
+  { id: "e5", nome: "Capital", ativa: true },
+  { id: "e6", nome: "Distribuidora", ativa: true },
+  { id: "e7", nome: "Postos", ativa: true },
 ];
 
 export const usuariosIniciais: UsuarioPerfil[] = [
-  { id: "u1", nome: "Ana Lima", email: "ana@fan.com", empresa: "FAN Indústria", perfil: "Ponto Focal", ativo: true },
-  { id: "u2", nome: "Ricardo Souza", email: "ricardo@fan.com", empresa: "FAN Logística", perfil: "Ponto Focal", ativo: true },
-  { id: "u3", nome: "Marina Costa", email: "marina@fan.com", empresa: "FAN Agro", perfil: "Líder de Melhoria Contínua", ativo: true },
-  { id: "u4", nome: "Paulo Henrique", email: "paulo@fan.com", empresa: "FAN Indústria", perfil: "Comitê", ativo: true },
-  { id: "u5", nome: "Beatriz Nunes", email: "bia@fan.com", empresa: "FAN Serviços", perfil: "BP de RH", ativo: true },
-  { id: "u6", nome: "Roberto Diniz", email: "roberto@fan.com", empresa: "FAN Indústria", perfil: "Diretoria", ativo: true },
-  { id: "u7", nome: "Helena Prado", email: "helena@fan.com", empresa: "FAN Indústria", perfil: "Superintendência", ativo: true },
-  { id: "u8", nome: "João Operador", email: "—", matricula: "12345", empresa: "FAN Indústria", perfil: "Colaborador", ativo: true },
-  { id: "u9", nome: "Admin Master", email: "admin@fan.com", empresa: "FAN Indústria", perfil: "Administrador", ativo: true },
+  { id: "u1", nome: "Ana Lima", email: "ana@fan.com", empresa: "Usibras - Aquiraz", perfil: "Ponto Focal", ativo: true },
+  { id: "u2", nome: "Ricardo Souza", email: "ricardo@fan.com", empresa: "Usibras - Mossoró", perfil: "Ponto Focal", ativo: true },
+  { id: "u3", nome: "Marina Costa", email: "marina@fan.com", empresa: "Construtora", perfil: "Líder de Melhoria Contínua", ativo: true },
+  { id: "u4", nome: "Paulo Henrique", email: "paulo@fan.com", empresa: "Usibras - Aquiraz", perfil: "Comitê", ativo: true },
+  { id: "u5", nome: "Beatriz Nunes", email: "bia@fan.com", empresa: "Postos", perfil: "BP de RH", ativo: true },
+  { id: "u6", nome: "Roberto Diniz", email: "roberto@fan.com", empresa: "Usibras - Aquiraz", perfil: "Diretoria", ativo: true },
+  { id: "u7", nome: "Helena Prado", email: "helena@fan.com", empresa: "Usibras - Aquiraz", perfil: "Superintendência", ativo: true },
+  { id: "u8", nome: "João Operador", email: "—", matricula: "12345", empresa: "Usibras - Aquiraz", perfil: "Colaborador", ativo: true },
+  { id: "u9", nome: "Admin Master", email: "admin@fan.com", empresa: "Usibras - Aquiraz", perfil: "Administrador", ativo: true },
 ];
 
 export const etapasSlaIniciais: EtapaSla[] = [
