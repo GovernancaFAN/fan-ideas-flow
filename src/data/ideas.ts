@@ -87,11 +87,13 @@ export interface Idea {
 }
 
 export const empresas = [
-  "FAN Indústria",
-  "FAN Logística",
-  "FAN Agro",
-  "FAN Energia",
-  "FAN Serviços",
+  "Usibras - Aquiraz",
+  "Usibras - Mossoró",
+  "Construtora",
+  "My Blue",
+  "Capital",
+  "Distribuidora",
+  "Postos",
 ];
 
 export const setores = [

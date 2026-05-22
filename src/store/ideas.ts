@@ -163,7 +163,7 @@ export const useIdeas = create<IdeasState>((set, get) => ({
       return {
         id,
         code,
-        empresa: l.empresa || "FAN Indústria",
+        empresa: l.empresa || "Usibras - Aquiraz",
         colaborador: l.colaborador || "—",
         setorColaborador: l.setorColaborador || "—",
         setorAplicacao: l.setorAplicacao || "—",
