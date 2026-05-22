@@ -95,7 +95,7 @@ export default function Login() {
 function BootstrapAdmin() {
   const [open, setOpen] = useState(false);
   const [nome, setNome] = useState("");
-  const [empresa, setEmpresa] = useState("FAN Indústria");
+  const [empresa, setEmpresa] = useState("Usibras - Aquiraz");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [loading, setLoading] = useState(false);
@@ -134,7 +134,21 @@ function BootstrapAdmin() {
         <DialogHeader><DialogTitle>Criar Administrador inicial</DialogTitle></DialogHeader>
         <div className="space-y-3">
           <div className="space-y-1"><Label>Nome</Label><Input value={nome} onChange={(e) => setNome(e.target.value)} /></div>
-          <div className="space-y-1"><Label>Empresa</Label><Input value={empresa} onChange={(e) => setEmpresa(e.target.value)} /></div>
+          <div className="space-y-1">
+            <Label>Empresa</Label>
+            <Select value={empresa} onValueChange={(v) => setEmpresa(v)}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Usibras - Aquiraz">Usibras - Aquiraz</SelectItem>
+                <SelectItem value="Usibras - Mossoró">Usibras - Mossoró</SelectItem>
+                <SelectItem value="Construtora">Construtora</SelectItem>
+                <SelectItem value="My Blue">My Blue</SelectItem>
+                <SelectItem value="Capital">Capital</SelectItem>
+                <SelectItem value="Distribuidora">Distribuidora</SelectItem>
+                <SelectItem value="Postos">Postos</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="space-y-1"><Label>E-mail</Label><Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
           <div className="space-y-1"><Label>Senha (mín. 6)</Label><Input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
         </div>
