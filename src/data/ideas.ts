@@ -172,7 +172,7 @@ export const criterios = {
 
 export const initialIdeas: Idea[] = [
   {
-    id: "1", code: "MC-0142", empresa: "FAN Indústria", colaborador: "Carlos Mendes",
+    id: "1", code: "MC-0142", empresa: "Usibras - Aquiraz", colaborador: "Carlos Mendes",
     setorColaborador: "Manutenção", setorAplicacao: "Produção",
     problema: "Paradas frequentes da linha 3 por desalinhamento de esteira causando perda de 4h/semana.",
     sugestao: "Instalar guias laterais ajustáveis com sensor de desvio integrado ao CLP.",
@@ -193,7 +193,7 @@ export const initialIdeas: Idea[] = [
     campaign: "Redução de Custos 2026",
   },
   {
-    id: "2", code: "MC-0156", empresa: "FAN Logística", colaborador: "Patrícia Souza",
+    id: "2", code: "MC-0156", empresa: "Usibras - Mossoró", colaborador: "Patrícia Souza",
     setorColaborador: "Logística", setorAplicacao: "Logística",
     problema: "Reentregas por endereços incompletos no sistema de roteirização.",
     sugestao: "Validação automática de CEP + geocoding antes de fechar o pedido.",
@@ -213,7 +213,7 @@ export const initialIdeas: Idea[] = [
     campaign: "Redução de Custos 2026",
   },
   {
-    id: "3", code: "MC-0173", empresa: "FAN Agro", colaborador: "Eduardo Lima",
+    id: "3", code: "MC-0173", empresa: "Construtora", colaborador: "Eduardo Lima",
     setorColaborador: "Qualidade", setorAplicacao: "Produção",
     problema: "Amostras de matéria-prima demoram para chegar ao laboratório.",
     sugestao: "Tubo pneumático entre recepção e laboratório.",
@@ -226,7 +226,7 @@ export const initialIdeas: Idea[] = [
     campaign: "Inovação Aberta",
   },
   {
-    id: "4", code: "MC-0181", empresa: "FAN Energia", colaborador: "Juliana Reis",
+    id: "4", code: "MC-0181", empresa: "My Blue", colaborador: "Juliana Reis",
     setorColaborador: "Administrativo", setorAplicacao: "Administrativo",
     problema: "Impressão excessiva de relatórios mensais.",
     sugestao: "Migrar relatórios para dashboard digital com assinatura eletrônica.",
@@ -236,7 +236,7 @@ export const initialIdeas: Idea[] = [
     campaign: "5S nas Áreas",
   },
   {
-    id: "5", code: "MC-0188", empresa: "FAN Indústria", colaborador: "Marcos Oliveira",
+    id: "5", code: "MC-0188", empresa: "Usibras - Aquiraz", colaborador: "Marcos Oliveira",
     setorColaborador: "Produção", setorAplicacao: "Produção",
     problema: "Setup demorado nas trocas de molde.",
     sugestao: "Aplicar SMED com kit ferramentas dedicado por máquina.",
@@ -252,7 +252,7 @@ export const initialIdeas: Idea[] = [
     ],
   },
   {
-    id: "6", code: "MC-0190", empresa: "FAN Serviços", colaborador: "Roberta Alves",
+    id: "6", code: "MC-0190", empresa: "Postos", colaborador: "Roberta Alves",
     setorColaborador: "RH", setorAplicacao: "RH",
     problema: "Falta um café melhor na copa.",
     sugestao: "Trocar marca do café.",
@@ -264,7 +264,7 @@ export const initialIdeas: Idea[] = [
     ],
   },
   {
-    id: "7", code: "MC-0192", empresa: "FAN Logística", colaborador: "Felipe Santana",
+    id: "7", code: "MC-0192", empresa: "Usibras - Mossoró", colaborador: "Felipe Santana",
     setorColaborador: "TI", setorAplicacao: "Logística",
     problema: "Muitos e-mails para conferir notas.",
     sugestao: "Automatizar conferência via OCR + RPA.",
@@ -277,7 +277,7 @@ export const initialIdeas: Idea[] = [
     ],
   },
   {
-    id: "8", code: "MC-0195", empresa: "FAN Indústria", colaborador: "Sofia Pires",
+    id: "8", code: "MC-0195", empresa: "Usibras - Aquiraz", colaborador: "Sofia Pires",
     setorColaborador: "Produção", setorAplicacao: "Produção",
     problema: "Identificação manual de lotes na linha 2 gera retrabalho.",
     sugestao: "Implantar etiquetas QR Code e leitura automática.",
