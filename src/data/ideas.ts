@@ -126,7 +126,7 @@ export interface Campaign {
 
 export const campanhas: Campaign[] = [
   { id: "c1", nome: "Redução de Custos 2026", empresa: "Todas", inicio: "2026-01-01", fim: "2026-12-31", objetivo: "Reduzir 5% do OPEX", tipo: "Redução de custo", cor: "from-orange-500 to-amber-500", descricao: "Ideias que reduzam custos operacionais.", ativa: true },
-  { id: "c2", nome: "5S nas Áreas", empresa: "FAN Indústria", inicio: "2026-03-01", fim: "2026-08-31", objetivo: "Implantar 5S em 100% das áreas produtivas", tipo: "5S", cor: "from-amber-500 to-yellow-500", descricao: "Organização, limpeza e disciplina.", ativa: true },
+  { id: "c2", nome: "5S nas Áreas", empresa: "Usibras - Aquiraz", inicio: "2026-03-01", fim: "2026-08-31", objetivo: "Implantar 5S em 100% das áreas produtivas", tipo: "5S", cor: "from-amber-500 to-yellow-500", descricao: "Organização, limpeza e disciplina.", ativa: true },
   { id: "c3", nome: "Inovação Aberta", empresa: "Todas", inicio: "2026-02-01", fim: "2026-12-31", objetivo: "Capturar soluções pioneiras e escaláveis", tipo: "Inovação", cor: "from-rose-500 to-orange-500", descricao: "Soluções pioneiras e replicáveis.", ativa: true },
   { id: "c4", nome: "Zero Acidente 2025", empresa: "Todas", inicio: "2025-01-01", fim: "2025-12-31", objetivo: "Reduzir TFCA em 30%", tipo: "Segurança", cor: "from-red-500 to-orange-500", descricao: "Encerrada em 2025.", ativa: false },
 ];
