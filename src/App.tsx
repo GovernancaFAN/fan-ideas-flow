@@ -16,7 +16,7 @@ import Implementacao from "./pages/Implementacao";
 import Campanhas from "./pages/Campanhas";
 import Ranking from "./pages/Ranking";
 import Admin from "./pages/Admin";
-import Login from "./pages/Login";
+
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -28,8 +28,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
+          <Route element={<AppLayout />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/nova" element={<RequirePerm module="nova"><NovaIdeia /></RequirePerm>} />
             <Route path="/kanban" element={<RequirePerm module="kanban"><Kanban /></RequirePerm>} />
