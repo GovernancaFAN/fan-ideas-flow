@@ -2,14 +2,15 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
 import { Button } from "@/components/ui/button";
-import { LogOut, Plus, Search } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/store/auth";
 import { NotificationsBell } from "./NotificationsBell";
+import { RoleSwitcher } from "./RoleSwitcher";
 
 export default function AppLayout() {
   const navigate = useNavigate();
-  const { nome, perfil, empresa, signOut } = useAuth();
+  const { nome, perfil, empresa } = useAuth();
   const initials = nome.split(" ").map(s => s[0]).slice(0,2).join("").toUpperCase();
   return (
     <SidebarProvider>
@@ -23,10 +24,8 @@ export default function AppLayout() {
               <Input placeholder="Buscar..." className="border-0 bg-transparent h-7 px-0 focus-visible:ring-0" />
             </div>
             <div className="ml-auto flex items-center gap-2">
+              <RoleSwitcher />
               <NotificationsBell />
-              <Button variant="ghost" size="sm" onClick={async () => { await signOut(); navigate("/login"); }} title="Sair">
-                <LogOut className="h-4 w-4 mr-1" /> Sair
-              </Button>
               <Button onClick={() => navigate("/nova")} className="bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95">
                 <Plus className="h-4 w-4 mr-1" /> Nova sugestão de melhoria
               </Button>

@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import AppLayout from "./components/AppLayout";
 import { RequirePerm } from "./components/RequirePerm";
-import { RequireAuth } from "./components/RequireAuth";
+
 import Dashboard from "./pages/Dashboard";
 import NovaIdeia from "./pages/NovaIdeia";
 import Kanban from "./pages/Kanban";
